@@ -1,78 +1,105 @@
-package com.program;
-
+import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main{
+class Book {
+    String title;
+    String author;
+    int id;
+
+    public Book(String title, String author, int id) {
+        this.title = title;
+        this.author = author;
+        this.id = id;
+    }
+
+    public String toString() {
+        return "Title: " + title + ", Author: " + author + ", ID: " + id;
+    }
+}
+
+class BookManagementSystem {
+    static ArrayList<Book> books = new ArrayList<Book>();
+    static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-
-// Display menu with alignment
-        System.out.println("===================================");
-        System.out.println("| BOOK MANAGEMENT |");
-        System.out.println("===================================");
-        System.out.println("| Options: |");
-        System.out.println("| 1. Add a book |");
-        System.out.println("| 2. View all books |");
-        System.out.println("| 3. Search for a book |");
-        System.out.println("| 4. Edit a book |");
-        System.out.println("| 5. Delete a book |");
-        System.out.println("| 6. Exit |");
-        System.out.println("===================================");
-
-// Get user input for menu choice
-        System.out.print("Enter your choice: ");
-        int choice = scanner.nextInt();
-
-// Process user input
-        switch (choice) {
-            case 1:
-                addBook();
-                break;
-            case 2:
-                viewBooks();
-                break;
-            case 3:
-                searchBook();
-                break;
-            case 4:
-                editBook();
-                break;
-            case 5:
-                deleteBook();
-                break;
-            case 6:
-                System.out.println("Exiting program...");
-                break;
-            default:
-                System.out.println("Invalid choice. Please try again.");
-                break;
-        }
-
-        scanner.close();
+        int choice = 0;
+        do {
+            System.out.println("Book Management System");
+            System.out.println("1. Add Book");
+            System.out.println("2. Delete Book");
+            System.out.println("3. Search Book");
+            System.out.println("4. View All Books");
+            System.out.println("5. Exit");
+            System.out.print("Enter your choice: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1:
+                    addBook();
+                    break;
+                case 2:
+                    deleteBook();
+                    break;
+                case 3:
+                    searchBook();
+                    break;
+                case 4:
+                    viewAllBooks();
+                    break;
+                case 5:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        } while (choice != 5);
     }
 
     public static void addBook() {
-// Implementation of add book feature
-        System.out.println("Adding a book...");
+        System.out.print("Enter book title: ");
+        String title = scanner.next();
+        System.out.print("Enter book author: ");
+        String author = scanner.next();
+        System.out.print("Enter book ID: ");
+        int id;
+        try {
+            id = scanner.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter an integer value for the book ID.");
+            scanner.nextLine();
+            return;
+        }
+        books.add(new Book(title, author, id));
+        System.out.println("Book added successfully.");
     }
-
-    public static void viewBooks() {
-// Implementation of view all books feature
-        System.out.println("Viewing all books...");
+    public static void deleteBook() {
+        System.out.print("Enter book ID to delete: ");
+        int id = scanner.nextInt();
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).id == id) {
+                books.remove(i);
+                System.out.println("Book deleted successfully.");
+                return;
+            }
+        }
+        System.out.println("Book not found.");
     }
 
     public static void searchBook() {
-// Implementation of search book feature
-        System.out.println("Searching for a book...");
+        System.out.print("Enter book ID to search: ");
+        int id = scanner.nextInt();
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).id == id) {
+                System.out.println(books.get(i));
+                return;
+            }
+        }
+        System.out.println("Book not found.");
     }
 
-    public static void editBook() {
-// Implementation of edit book feature
-        System.out.println("Editing a book...");
-    }
-
-    public static void deleteBook() {
-// Implementation of delete book feature
-        System.out.println("Deleting a book...");
-    }
+    public static void viewAllBooks() {
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println(books.get(i));
+ }
+}
 }
