@@ -1,6 +1,6 @@
 import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.util.*;
+
 
 class Book {
     String title;
@@ -20,7 +20,7 @@ class Book {
 
 class BookManagementSystem {
     static ArrayList<Book> books = new ArrayList<Book>();
-    static Scanner scanner = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         int choice = 0;
@@ -32,7 +32,7 @@ class BookManagementSystem {
             System.out.println("4. View All Books");
             System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
-            choice = scanner.nextInt();
+            choice = sc.nextInt();
             switch (choice) {
                 case 1:
                     addBook();
@@ -57,16 +57,16 @@ class BookManagementSystem {
 
     public static void addBook() {
         System.out.print("Enter book title: ");
-        String title = scanner.next();
+        String title = sc.next();
         System.out.print("Enter book author: ");
-        String author = scanner.next();
+        String author = sc.next();
         System.out.print("Enter book ID: ");
         int id;
         try {
-            id = scanner.nextInt();
-        } catch (InputMismatchException e) {
+            id = sc.nextInt();
+        } catch (Exception e) {
             System.out.println("Invalid input. Please enter an integer value for the book ID.");
-            scanner.nextLine();
+            sc.nextLine();
             return;
         }
         books.add(new Book(title, author, id));
@@ -74,7 +74,7 @@ class BookManagementSystem {
     }
     public static void deleteBook() {
         System.out.print("Enter book ID to delete: ");
-        int id = scanner.nextInt();
+        int id = sc.nextInt();
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).id == id) {
                 books.remove(i);
@@ -87,7 +87,7 @@ class BookManagementSystem {
 
     public static void searchBook() {
         System.out.print("Enter book ID to search: ");
-        int id = scanner.nextInt();
+        int id = sc.nextInt();
         for (int i = 0; i < books.size(); i++) {
             if (books.get(i).id == id) {
                 System.out.println(books.get(i));
@@ -100,6 +100,6 @@ class BookManagementSystem {
     public static void viewAllBooks() {
         for (int i = 0; i < books.size(); i++) {
             System.out.println(books.get(i));
- }
-}
+        }
+    }
 }
